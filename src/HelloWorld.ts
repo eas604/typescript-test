@@ -1,3 +1,5 @@
+'use strict';
+
 interface Person {
     firstname: string,
     middleinitial?: string,
@@ -5,19 +7,47 @@ interface Person {
     soundoff?(): string
 }
 
+enum Language {
+    angularjs,
+    python,
+    javascript,
+    csharp,
+    cplusplus,
+    c,
+    java,
+    typescript,
+    spanish,
+    english
+}
+
+// Get the string representation of any enum value, should it exist.
+var enumToString = (val: any, en: any) => en[val];
+
 class Developer implements Person {    
     firstname: string;
     middleinitial: string;
     lastname: string;
     
     fullname: string;
-    languages: string[];
+    languages: Language[];
     private lol: string;
     static ffs(): string {
         return 'oh ffs!';
     }
     
-    constructor(public p: Person, public l: string[])  {
+    private languagesStr(): string[] {
+        var result: string[] = [];
+        this.languages.forEach(l => {
+            result.push(enumToString(l, Language));
+        });
+        return result;
+    }
+    
+    soundoff(): string {        
+        return 'I\'m ' + this.fullname + ', and I speak ' + this.languagesStr().join(', ');
+    }    
+    
+    constructor(public p: Person, public l: Language[])  {
         this.firstname = p.firstname;
         this.middleinitial = p.middleinitial;
         this.lastname = p.lastname;
@@ -27,17 +57,17 @@ class Developer implements Person {
         if (this.middleinitial) this.fullname += ' ' + this.middleinitial + '.'; 
         this.fullname += ' ' + this.lastname;
         this.lol = 'rofl';  
-    }
-    
-    soundoff(): string {
-        return 'I\'m ' + this.fullname + ', and I speak ' + this.languages.join(', ');
-    }
+    }   
 }
 
 var user = new Developer({
         firstname: 'Edwin', lastname: 'Sheldon'
     }, [
-        'angularjs', 'python', 'javascript', 'c#', 'spanish'
+        Language.angularjs, 
+        Language.python, 
+        Language.javascript,
+        Language.csharp,
+        Language.spanish
     ]);
 
 var f1 = (i: number) => i*i;
