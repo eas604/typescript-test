@@ -20,8 +20,43 @@ enum Language {
     english
 }
 
+enum Editor {
+    vi,
+    vim,
+    ed,
+    emacs,
+    nano,
+    pico,
+    sublime,
+    atom,
+    brackets,
+    code,
+    notepad,
+    gedit,
+    notepadplusplus,
+    visualstudio
+}
+
+enum OS {
+    linux,
+    unix,
+    bsd,
+    windows,
+    osx,
+    android,
+    ios,
+    windowsphone
+}
+
 // Get the string representation of any enum value, should it exist.
 var enumToString = (val: any, en: any) => en[val];
+var enumsToString = function (vals: any[], en: any) {
+    var result: string[] = [];
+    vals.forEach(v => {
+        result.push(enumToString(v, en));
+    });
+    return result;    
+}
 
 class Developer implements Person {    
     firstname: string;
@@ -30,24 +65,25 @@ class Developer implements Person {
     
     fullname: string;
     languages: Language[];
+    editors: Editor[];
+    operatingsystems: OS[];
+    
     private lol: string;
     static ffs(): string {
         return 'oh ffs!';
     }
     
-    private languagesStr(): string[] {
-        var result: string[] = [];
-        this.languages.forEach(l => {
-            result.push(enumToString(l, Language));
-        });
-        return result;
-    }
-    
-    soundoff(): string {        
-        return 'I\'m ' + this.fullname + ', and I speak ' + this.languagesStr().join(', ');
+    soundoff(): string {      
+        var txt = 'I\'m ' + this.fullname + ', and I speak '
+            + enumsToString(this.languages, Language).join(', ') + '.<br />'
+            + 'My favorite editors are ' + enumsToString(this.editors, Editor).join(', ') + '.';
+        if (this.operatingsystems) 
+            txt += '<br />I develop for ' + enumsToString(this.operatingsystems, OS).join(', ') + '.';
+        return txt;
     }    
     
-    constructor(public p: Person, public l: Language[])  {
+    constructor(public p: Person, public l: Language[], public e: Editor[],
+            public o?: OS[])  {
         this.firstname = p.firstname;
         this.middleinitial = p.middleinitial;
         this.lastname = p.lastname;
@@ -57,6 +93,9 @@ class Developer implements Person {
         if (this.middleinitial) this.fullname += ' ' + this.middleinitial + '.'; 
         this.fullname += ' ' + this.lastname;
         this.lol = 'rofl';  
+        
+        this.editors = e;
+        this.operatingsystems = o;
     }   
 }
 
@@ -68,6 +107,10 @@ var user = new Developer({
         Language.javascript,
         Language.csharp,
         Language.spanish
+    ], [
+        Editor.code, Editor.vim, Editor.visualstudio
+    ], [
+        OS.linux, OS.unix, OS.bsd, OS.windows
     ]);
 
 var f1 = (i: number) => i*i;
