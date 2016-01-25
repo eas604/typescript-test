@@ -70,12 +70,8 @@ function oxford<T>(coll: T[]): string {
 class Developer implements Person {    
     firstname: string;
     middleinitial: string;
-    lastname: string;
-    
+    lastname: string;    
     fullname: string;
-    languages: Language[];
-    editors: Editor[];
-    operatingsystems: OS[];
     
     soundoff(): string {      
         var txt = 'I\'m ' + this.fullname + ', and I speak '
@@ -86,15 +82,13 @@ class Developer implements Person {
         return txt;
     }    
     
-    constructor(public p: Person, public l: Language[], public e: Editor[],
-            public o?: OS[])  {
+    constructor(private p: Person, public languages: Language[], public editors: Editor[],
+            public operatingsystems?: OS[])  {
         this.firstname = p.firstname;
         this.middleinitial = p.middleinitial;
         this.lastname = p.lastname;
-        this.languages = l;
-        this.editors = e;
-        this.operatingsystems = o;        
-        
+        delete this.p;
+                   
         this.fullname = this.firstname;        
         if (this.middleinitial) this.fullname += ' ' + this.middleinitial + '.'; 
         this.fullname += ' ' + this.lastname;
