@@ -8,16 +8,16 @@ interface Person {
 }
 
 enum Language {
-    angularjs,
-    python,
-    javascript,
-    csharp,
-    cplusplus,
-    c,
-    java,
-    typescript,
-    spanish,
-    english
+    AngularJS,
+    Python,
+    JavaScript,
+    CSharp,
+    CPlusPlus,
+    C,
+    Java,
+    TypeScript,
+    Spanish,
+    English
 }
 
 enum Editor {
@@ -27,27 +27,27 @@ enum Editor {
     emacs,
     nano,
     pico,
-    sublime,
-    atom,
-    brackets,
-    code,
-    notepad,
+    Sublime,
+    Atom,
+    Brackets,
+    Code,
+    Notepad,
     gedit,
-    notepadplusplus,
-    visualstudio,
-    pycharm,
-    webstorm
+    NotepadPlusPlus,
+    VisualStudio,
+    PyCharm,
+    WebStorm
 }
 
 enum OS {
-    linux,
-    unix,
-    bsd,
-    windows,
-    osx,
-    android,
-    ios,
-    windowsphone
+    Linux,
+    Unix,
+    BSD,
+    Windows,
+    OSX,
+    Android,
+    iOS,
+    WindowsPhone
 }
 
 // Get the string representation of any enum value, should it exist.
@@ -104,15 +104,15 @@ class Developer implements Person {
 var user = new Developer({
         firstname: 'Edwin', lastname: 'Sheldon'
     }, [
-        Language.angularjs, 
-        Language.python, 
-        Language.javascript,
-        Language.csharp,
-        Language.spanish
+        Language.AngularJS, 
+        Language.Python, 
+        Language.JavaScript,
+        Language.CSharp,
+        Language.Spanish
     ], [
-        Editor.code, Editor.vim, Editor.visualstudio, Editor.pycharm
+        Editor.Code, Editor.vim, Editor.VisualStudio, Editor.PyCharm
     ], [
-        OS.linux, OS.unix, OS.bsd, OS.windows
+        OS.Linux, OS.Unix, OS.BSD, OS.Windows
     ]);
 
 document.body.innerHTML = user.soundoff();
