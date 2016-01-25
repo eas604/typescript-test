@@ -50,7 +50,7 @@ enum OS {
     WindowsPhone
 }
 
-// Get the string representation of any enum value, should it exist.
+/** Get the string representation of any enum value, should it exist. */
 function enumToString<T> (val: number, en: T) { return en[val]; }
 function enumsToString<T> (vals: number[], en: T) {
     var result: string[] = [];
@@ -58,6 +58,13 @@ function enumsToString<T> (vals: number[], en: T) {
         result.push(enumToString(v, en));
     });
     return result;    
+}
+
+/** Oxford comma string from a collection */
+function oxford<T>(coll: T[]): string {
+    var txt = coll.join(', ');
+    var i = txt.lastIndexOf(', ');
+    return txt.slice(0, i) + txt.slice(i).replace(', ', ', and ');     
 }
 
 class Developer implements Person {    
@@ -70,19 +77,12 @@ class Developer implements Person {
     editors: Editor[];
     operatingsystems: OS[];
     
-    private oxford(coll: any[]): string {
-        var txt = coll.join(', ');
-        var i = txt.lastIndexOf(', ');
-        return txt.slice(0, i) + txt.slice(i).replace(', ', ', and ');
-        //return txt.replace(new RegExp(', '), ', and ');        
-    }
-    
     soundoff(): string {      
         var txt = 'I\'m ' + this.fullname + ', and I speak '
-            + this.oxford(enumsToString(this.languages, Language)) + '.<br />'
-            + 'My favorite editors are ' + this.oxford(enumsToString(this.editors, Editor)) + '.';
+            + oxford(enumsToString(this.languages, Language)) + '.<br />'
+            + 'My favorite editors are ' + oxford(enumsToString(this.editors, Editor)) + '.';
         if (this.operatingsystems) 
-            txt += '<br />I develop for ' + this.oxford(enumsToString(this.operatingsystems, OS)) + '.';
+            txt += '<br />I develop for ' + oxford(enumsToString(this.operatingsystems, OS)) + '.';
         return txt;
     }    
     
