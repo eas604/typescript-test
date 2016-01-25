@@ -51,8 +51,8 @@ enum OS {
 }
 
 // Get the string representation of any enum value, should it exist.
-var enumToString = (val: any, en: any) => en[val];
-var enumsToString = function (vals: any[], en: any) {
+function enumToString<T> (val: number, en: T) { return en[val]; }
+function enumsToString<T> (vals: number[], en: T) {
     var result: string[] = [];
     vals.forEach(v => {
         result.push(enumToString(v, en));
