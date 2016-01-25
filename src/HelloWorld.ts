@@ -34,7 +34,9 @@ enum Editor {
     notepad,
     gedit,
     notepadplusplus,
-    visualstudio
+    visualstudio,
+    pycharm,
+    webstorm
 }
 
 enum OS {
@@ -68,17 +70,19 @@ class Developer implements Person {
     editors: Editor[];
     operatingsystems: OS[];
     
-    private lol: string;
-    static ffs(): string {
-        return 'oh ffs!';
+    private oxford(coll: any[]): string {
+        var txt = coll.join(', ');
+        var i = txt.lastIndexOf(', ');
+        return txt.slice(0, i) + txt.slice(i).replace(', ', ', and ');
+        //return txt.replace(new RegExp(', '), ', and ');        
     }
     
     soundoff(): string {      
         var txt = 'I\'m ' + this.fullname + ', and I speak '
-            + enumsToString(this.languages, Language).join(', ') + '.<br />'
-            + 'My favorite editors are ' + enumsToString(this.editors, Editor).join(', ') + '.';
+            + this.oxford(enumsToString(this.languages, Language)) + '.<br />'
+            + 'My favorite editors are ' + this.oxford(enumsToString(this.editors, Editor)) + '.';
         if (this.operatingsystems) 
-            txt += '<br />I develop for ' + enumsToString(this.operatingsystems, OS).join(', ') + '.';
+            txt += '<br />I develop for ' + this.oxford(enumsToString(this.operatingsystems, OS)) + '.';
         return txt;
     }    
     
@@ -88,14 +92,12 @@ class Developer implements Person {
         this.middleinitial = p.middleinitial;
         this.lastname = p.lastname;
         this.languages = l;
+        this.editors = e;
+        this.operatingsystems = o;        
         
         this.fullname = this.firstname;        
         if (this.middleinitial) this.fullname += ' ' + this.middleinitial + '.'; 
         this.fullname += ' ' + this.lastname;
-        this.lol = 'rofl';  
-        
-        this.editors = e;
-        this.operatingsystems = o;
     }   
 }
 
@@ -108,11 +110,9 @@ var user = new Developer({
         Language.csharp,
         Language.spanish
     ], [
-        Editor.code, Editor.vim, Editor.visualstudio
+        Editor.code, Editor.vim, Editor.visualstudio, Editor.pycharm
     ], [
         OS.linux, OS.unix, OS.bsd, OS.windows
     ]);
 
-var f1 = (i: number) => i*i;
-
-document.body.innerHTML = user.soundoff() + '<br />' + f1(6) + '<br />' + Developer.ffs();
+document.body.innerHTML = user.soundoff();
